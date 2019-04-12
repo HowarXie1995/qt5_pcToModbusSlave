@@ -7,6 +7,11 @@
 #include <QByteArray>
 #include <QDebug>
 
+typedef enum ERROR
+{
+    TRANS_SUCCE = 10086,  	//传输成功
+    TRANS_FAIL				//传输失败
+}ERROR;
 
 class ModbusHand
 {
@@ -24,7 +29,7 @@ public:/************************************公有************成员变量******
  *函数参数: recvStr:从text上接收的数据
  *函数返回值: 处理成modbus格式后的数据
 */
-    std::string transDataToMod(std::string &recvData);
+    ERROR transDataToMod(std::string &recvData);
 private://成员函数
 
 };
