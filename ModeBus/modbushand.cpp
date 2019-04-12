@@ -1,24 +1,26 @@
 #include "modbushand.h"
+#include <QThread>
 
 ModbusHand::ModbusHand()
 {
 
 }
 
-std::string ModbusHand::transDataToMod(QString recvStr)
+std::string ModbusHand::transDataToMod(std::string &recvData)
 {
-    std::string recvData = recvStr.toStdString();
-    for(unsigned int i = 0; i < recvData.length(); ++i){	//遍历recvStr
-        if(recvData[i] >= 'A' && recvData[i] <= 'Z'){		//如果在'A' 和 'Z' 范围内
-            recvData[i] -= 55;
-        }else if(recvData[i] >= 'a' && recvData[i] <= 'z'){//如果在'a' 和 'z' 范围内
-            recvData[i] -= 87;
-        }else if(recvData[i] >= '0' && recvData[i] <= '9'){//如果在'0' 和 '9' 范围内
-            recvData[i] -= '0';
-        }else{		//如果都不在，删除
-            recvData.erase(recvData[i]);
+    std::string::iterator p;
+    for(p = recvData.begin(); p != recvData.end() ; ++p){
+        if(*p >= 'A' && *p <= 'F') { //如果在'A' 和 'Z' 范围内
+           *p -= 55;
+        }else if(*p >= 'a' && *p <= 'f'){ //如果在'a' 和 'z' 范围内
+            *p -= 87;
+        }else if(*p >= '0' && *p <= '9'){ //如果在'0' 和 '9' 范围内
+            *p -= '0';
+        }else{
+            std::string::iterator pre = p;
+            recvData.erase(pre);
         }
     }
-    return recvData;
 
+       return recvData;
 }

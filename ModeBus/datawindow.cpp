@@ -69,7 +69,8 @@ void DataWindow::on_bt_sendData_clicked()
 {
     if(1 == modBusFouc)
     {
-        std::string data = modHand.transDataToMod(ui->text_sendData->toPlainText());
+        std::string data = (ui->text_sendData->toPlainText()).toStdString();
+        modHand.transDataToMod(data);
         serial.write(data.data());
         ui->label_remind->setText("ModBus数据发送成功");
 
